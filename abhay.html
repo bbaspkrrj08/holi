@@ -1,0 +1,131 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Holi</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+font-family:Arial;
+background: linear-gradient(270deg, red, yellow, blue, green, pink, orange, purple);
+background-size:1400% 1400%;
+animation:bgmove 10s infinite alternate;
+}
+
+@keyframes bgmove{
+0%{background-position:0% 50%;}
+100%{background-position:100% 50%;}
+}
+
+h1{
+font-size:80px;
+color:white;
+text-align:center;
+margin:0;
+text-shadow:0 0 20px yellow,0 0 40px orange,0 0 60px red;
+}
+
+p{
+font-size:28px;
+color:white;
+margin-top:10px;
+}
+
+.balloon{
+position:absolute;
+bottom:-80px;
+font-size:40px;
+cursor:pointer;
+animation:rise linear forwards;
+}
+
+@keyframes rise{
+0%{transform:translateY(0);}
+100%{transform:translateY(-120vh);}
+}
+
+.particle{
+position:absolute;
+width:10px;
+height:10px;
+border-radius:50%;
+pointer-events:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🌸 HAPPY HOLI 🌸</h1>
+<p>Click the balloons 🎈</p>
+
+<script>
+
+const colors=["red","yellow","blue","green","pink","orange","purple"]
+
+function createBalloon(){
+
+const balloon=document.createElement("div")
+balloon.className="balloon"
+balloon.innerHTML="🎈"
+
+balloon.style.left=Math.random()*100+"vw"
+balloon.style.animationDuration=(Math.random()*6+5)+"s"
+
+balloon.onclick=function(e){
+
+let rect=balloon.getBoundingClientRect()
+let x=rect.left+20
+let y=rect.top+20
+
+for(let i=0;i<25;i++){
+
+const particle=document.createElement("div")
+particle.className="particle"
+
+particle.style.background=colors[Math.floor(Math.random()*colors.length)]
+
+particle.style.left=x+"px"
+particle.style.top=y+"px"
+
+document.body.appendChild(particle)
+
+let angle=Math.random()*2*Math.PI
+let distance=Math.random()*120
+
+particle.animate([
+{transform:"translate(0,0)",opacity:1},
+{transform:`translate(${Math.cos(angle)*distance}px,${Math.sin(angle)*distance}px)`,opacity:0}
+],
+{duration:1000})
+
+setTimeout(()=>particle.remove(),1000)
+
+}
+
+balloon.remove()
+
+}
+
+document.body.appendChild(balloon)
+
+setTimeout(()=>balloon.remove(),11000)
+
+}
+
+setInterval(createBalloon,900)
+
+</script>
+
+</body>
+</html>
+```
